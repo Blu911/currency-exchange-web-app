@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS currencies;
+
+CREATE TABLE currencies
+(
+  id   INT AUTO_INCREMENT PRIMARY KEY,
+  code VARCHAR(250) NOT NULL,
+  name VARCHAR(250) NOT NULL,
+);

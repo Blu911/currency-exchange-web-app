@@ -29,18 +29,35 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>2.1.4.RELEASE</version>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+        <!-- In memory H2 DB -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+            <version>1.4.199</version>
+        </dependency>
+        <!-- JSON parser -->
+        <dependency>
+            <groupId>com.codesnippets4all</groupId>
+            <artifactId>quick-json</artifactId>
+            <version>1.0.4</version>
+        </dependency>
+        <!-- HTTP client -->
         <dependency>
             <groupId>com.jcabi</groupId>
             <artifactId>jcabi-http</artifactId>
             <version>1.16</version>
         </dependency>
-
         <!-- JSTL tag lib -->
         <dependency>
             <groupId>javax.servlet.jsp.jstl</groupId>
@@ -52,13 +69,11 @@
             <artifactId>standard</artifactId>
             <version>1.1.2</version>
         </dependency>
-
         <!-- Tomcat for JSP rendering -->
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
         </dependency>
-
     </dependencies>
 
     <build>
