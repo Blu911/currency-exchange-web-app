@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 class HttpClient {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CurrenciesClient.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CurrencyClient.class);
 
     static String getStringFromUri(String uri) {
         try {

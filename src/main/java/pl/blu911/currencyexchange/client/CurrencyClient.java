@@ -5,7 +5,7 @@ import pl.blu911.currencyexchange.model.Currency;
 
 import java.util.*;
 
-public class CurrenciesClient {
+public class CurrencyClient {
 
     private static final String CURRENCIES_URI = "https://openexchangerates.org/api/currencies.json";
 

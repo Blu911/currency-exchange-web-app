@@ -2,16 +2,15 @@ package pl.blu911.currencyexchange.client;
 
 import org.junit.Test;
 import pl.blu911.currencyexchange.model.Currency;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class CurrenciesClientTest {
+public class CurrencyClientTest {
 
     @Test
-    public void shouldReturnSpecifiedCurrencyObject() throws IOException {
-        ArrayList<Currency> returnedCurrencies = CurrenciesClient.getCurrencies();
+    public void shouldReturnSpecifiedCurrencyObject() {
+        List<Currency> returnedCurrencies = CurrencyClient.getCurrencies();
 
         Currency expectedCurrency = new Currency("USD", "United States Dollar");
 
