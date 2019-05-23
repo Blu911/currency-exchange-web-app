@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 public class CurrencyClientTest {
 
     @Test
-    public void shouldReturnSpecifiedCurrencyObject() {
+    public void shouldContainSpecifiedCurrencyObject() {
         List<Currency> returnedCurrencies = CurrencyClient.getCurrencies();
 
         Currency expectedCurrency = new Currency("USD", "United States Dollar");
