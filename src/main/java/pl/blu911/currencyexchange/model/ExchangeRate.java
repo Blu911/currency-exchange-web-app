@@ -3,7 +3,6 @@ package pl.blu911.currencyexchange.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -15,4 +14,5 @@ public class ExchangeRate {
     private String toCurrency;
     private BigDecimal exchangeRate;
     private LocalDate date;
+    private String apiNote;
 }

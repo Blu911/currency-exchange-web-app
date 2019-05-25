@@ -2,9 +2,7 @@ package pl.blu911.currencyexchange.client;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;
-
 import java.io.IOException;
-
 import static org.junit.Assert.*;
 
 public class HttpClientTest {

@@ -3,7 +3,6 @@ package pl.blu911.currencyexchange.client;
 import org.junit.Test;
 import pl.blu911.currencyexchange.model.Currency;
 import java.util.List;
-
 import static org.junit.Assert.*;
 
 public class CurrencyClientTest {
