@@ -76,11 +76,18 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
     }
 
     private List<ExchangeRate> filterRatesByTimePeriod(List<ExchangeRate> exchangeRateList, LocalDate date) {
-        return exchangeRateList.stream()
-                            .filter(e -> e.getDate().isEqual(date)
-                                    || e.getDate().isAfter(date))
-                            .sorted(Comparator.comparing(ExchangeRate::getDate))
-                            .collect(Collectors.toList());
+        List<ExchangeRate> result = new ArrayList<>();
+        try {
+            result = exchangeRateList.stream()
+                    .filter(e -> e.getDate().isEqual(date)
+                            || e.getDate().isAfter(date))
+                    .sorted(Comparator.comparing(ExchangeRate::getDate))
+                    .collect(Collectors.toList());
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            LOGGER.error("Found null value in historical exchange rates data" + exchangeRateList.toString());
+        }
+        return result;
     }
 
     private void checkSize(List<List<ExchangeRate>> result, List<ExchangeRate> first, List<ExchangeRate> second) {

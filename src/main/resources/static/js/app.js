@@ -36,7 +36,7 @@ function displayRealtimePanel(dataset) {
     var cardBody = $("<div>").addClass("card-body form-inline");
     var h5 = $("<h5>").addClass("card-title my-1").attr("id", "exchange-rate").text(dataset.realtimeRate.exchangeRate).css("font-weight", "bold");
     var label = $("<label>").addClass("my-1 mr-2").text("Amount").css("margin-left", "70px");
-    var input = $("<input>").addClass("form-control my-1").attr("min", "1").attr("type", "number").attr("value", "1").attr("id", "input-number").css("width", "80px", "margin-left", "10px");
+    var input = $("<input>").addClass("form-control my-1").attr("min", "1").attr("type", "number").attr("value", "1").attr("id", "input-number").css("width", "100px", "margin-left", "10px");
     var cardFooter = $("<div>").addClass("card-footer text-muted").text(fromCurrency + " --> " + toCurrency);
 
 
@@ -45,7 +45,7 @@ function displayRealtimePanel(dataset) {
     card.append(cardHeader, cardBody, cardFooter);
 
     $('#realtime-panel').html(card);
-    $("#search-form-footer").text("Date: " + dataset.realtimeRate.date);
+    $("#search-form-footer").text("Current data as per day: " + dataset.realtimeRate.date);
 }
 
 function displayRealtimePanelError(error) {

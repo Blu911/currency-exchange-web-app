@@ -24,6 +24,12 @@ public class SearchController {
     @GetMapping("/search")
     public ResponseEntity<?> getSearchResult(@RequestParam String fromCurrency,
                                              @RequestParam String toCurrency) {
+        if(fromCurrency.equals(toCurrency)){
+            return ResponseEntity.badRequest().body(
+                    LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))
+                            + ": Please select 2 different currencies");
+        }
+
         SearchResponse result = new SearchResponse();
 
         ExchangeRate realTimeRate = exchangeRateService.getRealTimeRate(fromCurrency, toCurrency);
