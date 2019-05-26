@@ -1,7 +1,9 @@
-package pl.blu911.currencyexchange.client;
+package pl.blu911.currencyexchange.currency;
 
 import org.junit.Test;
-import pl.blu911.currencyexchange.model.Currency;
+import pl.blu911.currencyexchange.currency.Currency;
+import pl.blu911.currencyexchange.currency.CurrencyClient;
+
 import java.util.List;
 import static org.junit.Assert.*;
 

@@ -1,8 +1,9 @@
-package pl.blu911.currencyexchange.model;
+package pl.blu911.currencyexchange.exchangerate;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -10,8 +11,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExchangeRate {
-    private String fromCurrency;
-    private String toCurrency;
     private BigDecimal exchangeRate;
     private LocalDate date;
     private String apiNote;

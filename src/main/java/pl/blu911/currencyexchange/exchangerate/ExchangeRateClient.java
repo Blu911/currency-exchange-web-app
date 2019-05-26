@@ -1,7 +1,7 @@
-package pl.blu911.currencyexchange.client;
+package pl.blu911.currencyexchange.exchangerate;
 
 import org.json.*;
-import pl.blu911.currencyexchange.model.ExchangeRate;
+import pl.blu911.currencyexchange.client.HttpClient;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -41,13 +41,13 @@ public class ExchangeRateClient {
                     .getString("6. Last Refreshed")
                     .substring(0, 10));
 
-            return new ExchangeRate(fromCurrency, toCurrency, exchangeRate, date, null);
+            return new ExchangeRate(exchangeRate, date, null);
         } else if (note) {
-            return new ExchangeRate(fromCurrency, toCurrency,null,null,
-                                    jsonObject.getString("Note"));
+            return new ExchangeRate(null, null,
+                    jsonObject.getString("Note"));
         }
-        return new ExchangeRate(fromCurrency, toCurrency,null,null,
-                                jsonObject.getString("Error Message"));
+        return new ExchangeRate(null, null,
+                jsonObject.getString("Error Message"));
     }
 
     public static List<ExchangeRate> getHistoricalExchangeRates(String fromCurrency,
@@ -81,7 +81,7 @@ public class ExchangeRateClient {
                             .getJSONObject("Time Series FX (Daily)")
                             .getJSONObject(key)
                             .getString("4. close"));
-                    exchangeRates.add(new ExchangeRate(fromCurrency, toCurrency, exchangeRate, date, null));
+                    exchangeRates.add(new ExchangeRate(exchangeRate, date, null));
                 }
             }
 
@@ -89,12 +89,12 @@ public class ExchangeRateClient {
             return exchangeRates;
 
         } else if (note) {
-            exchangeRates.add(new ExchangeRate(fromCurrency, toCurrency,null,null,
-                                                jsonObject.getString("Note")));
+            exchangeRates.add(new ExchangeRate(null, null,
+                    jsonObject.getString("Note")));
             return exchangeRates;
         }
-        exchangeRates.add(new ExchangeRate(fromCurrency, toCurrency, null, null,
-                                            jsonObject.getString("Error Message")));
+        exchangeRates.add(new ExchangeRate(null, null,
+                jsonObject.getString("Error Message")));
         return exchangeRates;
     }
 }

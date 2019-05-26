@@ -1,7 +1,7 @@
-package pl.blu911.currencyexchange.client;
+package pl.blu911.currencyexchange.currency;
 
 import org.json.JSONObject;
-import pl.blu911.currencyexchange.model.Currency;
+import pl.blu911.currencyexchange.client.HttpClient;
 
 import java.util.*;
 

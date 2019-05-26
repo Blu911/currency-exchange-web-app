@@ -3,13 +3,14 @@ package pl.blu911.currencyexchange.client;
 import com.jcabi.http.request.JdkRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pl.blu911.currencyexchange.currency.CurrencyClient;
 
 import java.io.IOException;
 
-class HttpClient {
+public class HttpClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(CurrencyClient.class);
 
-    static String getStringFromUri(String uri) {
+    public static String getStringFromUri(String uri) {
         try {
             return new String(new JdkRequest(uri).fetch().binary());
         } catch (IOException e) {

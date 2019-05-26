@@ -1,7 +1,9 @@
-package pl.blu911.currencyexchange.client;
+package pl.blu911.currencyexchange.exchangerate;
 
 import org.junit.Test;
-import pl.blu911.currencyexchange.model.ExchangeRate;
+import pl.blu911.currencyexchange.exchangerate.ExchangeRate;
+import pl.blu911.currencyexchange.exchangerate.ExchangeRateClient;
+
 import static org.junit.Assert.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -22,8 +24,6 @@ public class ExchangeRateClientTest {
         List<ExchangeRate> returnedExchangeRates = ExchangeRateClient.getHistoricalExchangeRates("EUR", "USD", "full");
 
         ExchangeRate expectedExchangeRate = new ExchangeRate(
-                "EUR",
-                "USD",
                 new BigDecimal("1.1231"),
                 LocalDate.parse("2019-05" +
                         "-13"), null);
