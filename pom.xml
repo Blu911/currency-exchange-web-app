@@ -11,7 +11,7 @@
     <groupId>pl.blu911</groupId>
     <artifactId>currency-exchange</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>currency-exchange</name>
     <description>Currency exchange web application project</description>
 
