@@ -24,7 +24,7 @@ public class SearchController {
     @GetMapping("/search")
     public ResponseEntity<?> getSearchResult(@RequestParam String fromCurrency,
                                              @RequestParam String toCurrency) {
-        if(fromCurrency.equals(toCurrency)){
+        if (fromCurrency.equals(toCurrency)) {
             return ResponseEntity.badRequest().body(
                     LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))
                             + ": Please select 2 different currencies");
@@ -36,16 +36,19 @@ public class SearchController {
         if (realTimeRate == null) {
             return ResponseEntity.badRequest().body(
                     LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))
-                            + ": There is a connection problem with external API OR " +
-                            "exceeded 5 attempts per minute");
+                            + ": Five attempts per minute exceeded");
         }
 
         List<ExchangeRate> historicalRates = exchangeRateService.getHistoricalRates(fromCurrency, toCurrency);
-        if (historicalRates == null) {
+        if (historicalRates.get(0).getExchangeRate() == null) {
+            if (historicalRates.get(0).getApiNote().contains("Invalid API call")) {
+                return ResponseEntity.badRequest().body(
+                        LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))
+                                + ": There are no historical data for these currencies");
+            }
             return ResponseEntity.badRequest().body(
                     LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))
-                            + ": There is no historical data for these currencies OR " +
-                            "exceeded 5 attempts per minute");
+                            + ": Five attempts per minute exceeded");
         }
         List<List<ExchangeRate>> historicalRatesInPeriods = exchangeRateService.getHistoricalRatesInPeriods(historicalRates);
 

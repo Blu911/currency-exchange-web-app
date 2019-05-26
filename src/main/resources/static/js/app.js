@@ -109,6 +109,10 @@ function createGraph(dataset) {
         }]
     };
     var options = {
+        title: {
+            display: true,
+            text: 'Historical exchange chart'
+        },
         scales: {
             xAxes: [{
                 type: 'time',

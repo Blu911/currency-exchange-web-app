@@ -33,15 +33,17 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
             if (historicalRates.get(0).getApiNote().contains("Invalid API call")) {
 
                 List<ExchangeRate> historicalRatesCompact = ExchangeRateClient.getHistoricalExchangeRates(fromCurrency, toCurrency, "compact");
+
                 if (historicalRatesCompact.get(0).getApiNote().contains("Invalid API call")) {
                     LOGGER.error(fromCurrency + " " + toCurrency + " " + historicalRatesCompact.get(0).getApiNote());
-                    return null;
-                } else {
                     return historicalRatesCompact;
                 }
+                LOGGER.error(fromCurrency + " " + toCurrency + " " + historicalRatesCompact.get(0).getApiNote());
+                return historicalRatesCompact;
+
             }
             LOGGER.error(fromCurrency + " " + toCurrency + " " + historicalRates.get(0).getApiNote());
-            return null;
+            return historicalRates;
         }
         return historicalRates;
     }
