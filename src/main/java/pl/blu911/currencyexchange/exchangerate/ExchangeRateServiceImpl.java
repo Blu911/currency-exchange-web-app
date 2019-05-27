@@ -34,6 +34,7 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
 
                 List<ExchangeRate> historicalRatesCompact = ExchangeRateClient.getHistoricalExchangeRates(fromCurrency, toCurrency, "compact");
 
+                assert historicalRatesCompact != null;
                 if (historicalRatesCompact.get(0).getApiNote().contains("Invalid API call")) {
                     LOGGER.error(fromCurrency + " " + toCurrency + " " + historicalRatesCompact.get(0).getApiNote());
                     return historicalRatesCompact;
