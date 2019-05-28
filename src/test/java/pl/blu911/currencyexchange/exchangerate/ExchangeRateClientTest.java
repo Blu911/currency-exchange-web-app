@@ -1,8 +1,8 @@
 package pl.blu911.currencyexchange.exchangerate;
 
+import org.junit.Before;
 import org.junit.Test;
-import pl.blu911.currencyexchange.exchangerate.ExchangeRate;
-import pl.blu911.currencyexchange.exchangerate.ExchangeRateClient;
+import pl.blu911.currencyexchange.client.HttpClient;
 
 import static org.junit.Assert.*;
 import java.math.BigDecimal;
@@ -10,18 +10,24 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class ExchangeRateClientTest {
+private ExchangeRateClient exchangeRateClient;
+
+    @Before
+    public void setUp() {
+        exchangeRateClient = new ExchangeRateClient(new HttpClient());
+    }
 
     @Test
     public void shouldReturnExchangeRateNotNull() {
 
-        ExchangeRate returnedExchangeRate = ExchangeRateClient.getRealTimeExchangeRate("USD", "JPY");
+        ExchangeRate returnedExchangeRate = exchangeRateClient.getRealTimeExchangeRate("USD", "JPY");
 
         assertNotNull(returnedExchangeRate.getExchangeRate());
     }
 
     @Test
     public void shouldContainSpecifiedExchangeRateObject() {
-        List<ExchangeRate> returnedExchangeRates = ExchangeRateClient.getHistoricalExchangeRates("EUR", "USD", "full");
+        List<ExchangeRate> returnedExchangeRates = exchangeRateClient.getHistoricalExchangeRates("EUR", "USD", "full");
 
         ExchangeRate expectedExchangeRate = new ExchangeRate(
                 new BigDecimal("1.1231"),
