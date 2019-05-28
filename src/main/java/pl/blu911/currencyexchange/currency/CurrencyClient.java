@@ -1,29 +1,43 @@
 package pl.blu911.currencyexchange.currency;
 
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import pl.blu911.currencyexchange.client.HttpClient;
 
 import java.util.*;
 
+@Component
 public class CurrencyClient {
-
+    private final static Logger LOGGER = LoggerFactory.getLogger(CurrencyClient.class);
     private static final String CURRENCIES_URI = "https://openexchangerates.org/api/currencies.json";
 
-    public static List<Currency> getCurrencies() {
+    private final HttpClient httpClient;
+
+    public CurrencyClient(HttpClient httpClient) {
+        this.httpClient = httpClient;
+    }
+
+    List<Currency> getCurrencies() {
         List<Currency> currencyList = new ArrayList<>();
+        String jsonString = httpClient.getStringFromUri(CURRENCIES_URI);
 
-        String jsonString = HttpClient.getStringFromUri(CURRENCIES_URI);
+        try {
+            JSONObject jsonObject = new JSONObject(jsonString);
+            Iterator<String> keys = jsonObject.keys();
 
-        JSONObject jsonObject = new JSONObject(jsonString);
-        Iterator<String> keys = jsonObject.keys();
+            while (keys.hasNext()) {
+                String key = keys.next();
+                if (!key.equals("") && !key.equals(" "))
+                    currencyList.add(new Currency(key, jsonObject.getString(key)));
+            }
 
-        while (keys.hasNext()) {
-            String key = keys.next();
-            if (!key.equals("") && !key.equals(" "))
-                currencyList.add(new Currency(key, jsonObject.getString(key)));
+            currencyList.sort(Comparator.comparing(Currency::getCode));
+        } catch (NullPointerException e) {
+            LOGGER.error("Null value found while parsing jsonString to jsonObject");
+            e.printStackTrace();
         }
-
-        currencyList.sort(Comparator.comparing(Currency::getCode));
         return currencyList;
     }
 }
