@@ -3,20 +3,26 @@ package pl.blu911.currencyexchange.client;
 import com.jcabi.http.request.JdkRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.blu911.currencyexchange.currency.CurrencyClient;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+@Component
 public class HttpClient {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CurrencyClient.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(HttpClient.class);
 
-    public static String getStringFromUri(String uri) {
+    public String getStringFromUri(String uri) {
+        String result = null;
+
         try {
-            return new String(new JdkRequest(uri).fetch().binary());
+            result = new String(new JdkRequest(uri).fetch().binary());
+            if (result.equals("")){
+                return null;
+            }
         } catch (IOException e) {
-            LOGGER.error("Error while connecting to external URI");
+            LOGGER.error("Error while connecting to external URI, check internet connection");
             e.printStackTrace();
         }
-        return null;
+        return result;
     }
 }
