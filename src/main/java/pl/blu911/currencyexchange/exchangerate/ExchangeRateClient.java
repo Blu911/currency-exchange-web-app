@@ -1,6 +1,7 @@
 package pl.blu911.currencyexchange.exchangerate;
 
 import org.json.*;
+import org.springframework.stereotype.Component;
 import pl.blu911.currencyexchange.client.HttpClient;
 
 import java.math.BigDecimal;
@@ -10,15 +11,22 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+@Component
 public class ExchangeRateClient {
     private static final String ALPHA_ADVANTAGE_URI = "https://www.alphavantage.co/query?function=";
     private static final String API_KEY = "F41YX3ZBH15DU6BK";
     private static final String HISTORICAL_VALUES = "FX_DAILY";
     private static final String REALTIME_VALUES = "CURRENCY_EXCHANGE_RATE";
 
-    public static ExchangeRate getRealTimeExchangeRate(String fromCurrency, String toCurrency) {
+    private final HttpClient httpClient;
 
-        String jsonString = HttpClient.getStringFromUri(
+    public ExchangeRateClient(HttpClient httpClient) {
+        this.httpClient = httpClient;
+    }
+
+    ExchangeRate getRealTimeExchangeRate(String fromCurrency, String toCurrency) {
+
+        String jsonString = httpClient.getStringFromUri(
                 String.format("%s%s&from_currency=%s&to_currency=%s&apikey=%s",
                         ALPHA_ADVANTAGE_URI,
                         REALTIME_VALUES,
@@ -50,12 +58,12 @@ public class ExchangeRateClient {
                 jsonObject.getString("Error Message"));
     }
 
-    public static List<ExchangeRate> getHistoricalExchangeRates(String fromCurrency,
+    List<ExchangeRate> getHistoricalExchangeRates(String fromCurrency,
                                                                 String toCurrency,
                                                                 String outputSize) {
         List<ExchangeRate> exchangeRates = new ArrayList<>();
 
-        String jsonString = HttpClient.getStringFromUri(
+        String jsonString = httpClient.getStringFromUri(
                 String.format("%s%s&from_symbol=%s&to_symbol=%s&outputsize=%s&apikey=%s",
                         ALPHA_ADVANTAGE_URI,
                         HISTORICAL_VALUES,
