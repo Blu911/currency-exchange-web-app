@@ -13,10 +13,15 @@ import java.util.stream.Collectors;
 @Service
 public class ExchangeRateServiceImpl implements ExchangeRateService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExchangeRateServiceImpl.class);
+    private final ExchangeRateClient exchangeRateClient;
+
+    public ExchangeRateServiceImpl(ExchangeRateClient exchangeRateClient) {
+        this.exchangeRateClient = exchangeRateClient;
+    }
 
     @Override
     public ExchangeRate getRealTimeRate(String fromCurrency, String toCurrency) {
-        ExchangeRate realTimeRate = ExchangeRateClient.getRealTimeExchangeRate(fromCurrency, toCurrency);
+        ExchangeRate realTimeRate = exchangeRateClient.getRealTimeExchangeRate(fromCurrency, toCurrency);
         if (realTimeRate.getApiNote() != null) {
             LOGGER.error(fromCurrency + " " + toCurrency + " " + realTimeRate.getApiNote());
             return null;
@@ -26,13 +31,13 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
 
     @Override
     public List<ExchangeRate> getHistoricalRates(String fromCurrency, String toCurrency) {
-        List<ExchangeRate> historicalRates = ExchangeRateClient.getHistoricalExchangeRates(fromCurrency, toCurrency, "full");
+        List<ExchangeRate> historicalRates = exchangeRateClient.getHistoricalExchangeRates(fromCurrency, toCurrency, "full");
 
         if (historicalRates.get(0).getApiNote() != null) {
 
             if (historicalRates.get(0).getApiNote().contains("Invalid API call")) {
 
-                List<ExchangeRate> historicalRatesCompact = ExchangeRateClient.getHistoricalExchangeRates(fromCurrency, toCurrency, "compact");
+                List<ExchangeRate> historicalRatesCompact = exchangeRateClient.getHistoricalExchangeRates(fromCurrency, toCurrency, "compact");
 
                 assert historicalRatesCompact != null;
                 if (historicalRatesCompact.get(0).getApiNote().contains("Invalid API call")) {
