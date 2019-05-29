@@ -106,6 +106,34 @@ function createGraph(dataset) {
             fill: false,
             lineTension: 0,
             borderWidth: 2
+        }, {
+            backgroundColor: 'rgb(150, 99, 132)',
+            borderColor: 'rgb(150, 99, 132)',
+            data: [{
+                t: "2019-02-01",
+                y: 4.2883
+            }, {
+                t: "2019-05-24",
+                y: 4.2901
+            }],
+            pointRadius: 0,
+            fill: false,
+            lineTension: 0,
+            borderWidth: 2
+        }, {
+            backgroundColor: 'rgb(200, 99, 132)',
+            borderColor: 'rgb(200, 99, 132)',
+            data: [{
+                t: "2018-12-10",
+                y: 4.2926
+            }, {
+                t: "2018-09-19",
+                y: 4.2847
+            }],
+            pointRadius: 0,
+            fill: false,
+            lineTension: 0,
+            borderWidth: 2
         }]
     };
     var options = {
