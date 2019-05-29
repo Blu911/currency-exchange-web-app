@@ -39,7 +39,6 @@ function displayRealtimePanel(dataset) {
     var input = $("<input>").addClass("form-control my-1").attr("min", "1").attr("type", "number").attr("value", "1").attr("id", "input-number").css("width", "100px", "margin-left", "10px");
     var cardFooter = $("<div>").addClass("card-footer text-muted").text(fromCurrency + " --> " + toCurrency);
 
-
     //Constructing card element
     cardBody.append(h5, label, input);
     card.append(cardHeader, cardBody, cardFooter);
@@ -67,7 +66,6 @@ function changeAmount() {
     var exchangeRate = $("#exchange-rate").text();
 
     $("#input-number").change('input', function () {
-
         var number = $("#input-number").val();
         var multiply = exchangeRate * number;
         $("#exchange-rate").text(multiply);
@@ -77,12 +75,11 @@ function changeAmount() {
 function createGraph(dataset) {
     var fromCurrency = $("#fromCurrency").val();
     var toCurrency = $('#toCurrency').val();
-
     var historicalRates = dataset.historicalRates;
 
+    //refactoring the data into structure needed for graph creation
     var tabOfTabs = [];
     var singleValue;
-
     for (var i = 0; i < historicalRates.length; i++) {
         var tempTab = [];
         for (var j = 0; j < historicalRates[i].length; j++) {
@@ -96,40 +93,21 @@ function createGraph(dataset) {
         tabOfTabs.push(tempTab);
     }
 
+    //removing canvas with old graph
+    var chart = $("#chart");
+    if (typeof chart !== "undefined") {
+        chart.remove();
+        var canvas = $("<canvas>").attr("id", "chart");
+        $('#graph-panel').html(canvas);
+    }
+
+    //creating new graph
     var data = {
         datasets: [{
             label: fromCurrency + " to " + toCurrency,
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
             data: tabOfTabs[0],
-            pointRadius: 0,
-            fill: false,
-            lineTension: 0,
-            borderWidth: 2
-        }, {
-            backgroundColor: 'rgb(150, 99, 132)',
-            borderColor: 'rgb(150, 99, 132)',
-            data: [{
-                t: "2019-02-01",
-                y: 4.2883
-            }, {
-                t: "2019-05-24",
-                y: 4.2901
-            }],
-            pointRadius: 0,
-            fill: false,
-            lineTension: 0,
-            borderWidth: 2
-        }, {
-            backgroundColor: 'rgb(200, 99, 132)',
-            borderColor: 'rgb(200, 99, 132)',
-            data: [{
-                t: "2018-12-10",
-                y: 4.2926
-            }, {
-                t: "2018-09-19",
-                y: 4.2847
-            }],
             pointRadius: 0,
             fill: false,
             lineTension: 0,
@@ -177,15 +155,6 @@ function createGraph(dataset) {
             }]
         }
     };
-
-
-    var chart = $("#chart");
-    if (typeof chart !== "undefined") {
-        chart.remove();
-        var canvas = $("<canvas>").attr("id", "chart");
-        $('#graph-panel').html(canvas);
-    }
-
     var ctx = $("#chart");
     var myLineChart = new Chart(ctx, {
         type: 'line',
@@ -194,45 +163,7 @@ function createGraph(dataset) {
     });
 
     createButtons(tabOfTabs);
-
-
-    $("#1W").click(function () {
-        data.datasets[0].data = tabOfTabs[0];
-        myLineChart.update();
-    });
-    $("#2W").click(function () {
-        data.datasets[0].data = tabOfTabs[1];
-        myLineChart.update();
-    });
-    $("#1M").click(function () {
-        data.datasets[0].data = tabOfTabs[2];
-        myLineChart.update();
-    });
-    $("#2M").click(function () {
-        data.datasets[0].data = tabOfTabs[3];
-        myLineChart.update();
-    });
-    $("#6M").click(function () {
-        data.datasets[0].data = tabOfTabs[4];
-        myLineChart.update();
-    });
-    $("#1Y").click(function () {
-        data.datasets[0].data = tabOfTabs[5];
-        myLineChart.update();
-    });
-    $("#2Y").click(function () {
-        data.datasets[0].data = tabOfTabs[6];
-        myLineChart.update();
-    });
-    $("#5Y").click(function () {
-        data.datasets[0].data = tabOfTabs[7];
-        myLineChart.update();
-    });
-    $("#10Y").click(function () {
-        data.datasets[0].data = tabOfTabs[8];
-        myLineChart.update();
-    });
-
+    createButtonsEvents(data, tabOfTabs, myLineChart);
 }
 
 function createButtons(tabOfTabs) {
@@ -280,4 +211,43 @@ function createButtons(tabOfTabs) {
     }
 
     $('#periods').html(buttonGroup);
+}
+
+function createButtonsEvents(data, tabOfTabs, myLineChart) {
+    $("#1W").click(function () {
+        data.datasets[0].data = tabOfTabs[0];
+        myLineChart.update();
+    });
+    $("#2W").click(function () {
+        data.datasets[0].data = tabOfTabs[1];
+        myLineChart.update();
+    });
+    $("#1M").click(function () {
+        data.datasets[0].data = tabOfTabs[2];
+        myLineChart.update();
+    });
+    $("#2M").click(function () {
+        data.datasets[0].data = tabOfTabs[3];
+        myLineChart.update();
+    });
+    $("#6M").click(function () {
+        data.datasets[0].data = tabOfTabs[4];
+        myLineChart.update();
+    });
+    $("#1Y").click(function () {
+        data.datasets[0].data = tabOfTabs[5];
+        myLineChart.update();
+    });
+    $("#2Y").click(function () {
+        data.datasets[0].data = tabOfTabs[6];
+        myLineChart.update();
+    });
+    $("#5Y").click(function () {
+        data.datasets[0].data = tabOfTabs[7];
+        myLineChart.update();
+    });
+    $("#10Y").click(function () {
+        data.datasets[0].data = tabOfTabs[8];
+        myLineChart.update();
+    });
 }
