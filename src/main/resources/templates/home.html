@@ -27,15 +27,19 @@
                         <form action="/search" method="get" class="form-inline" id="search-form">
                             <label class="my-1 mr-2" for="fromCurrency">From</label>
                             <select class="custom-select my-1 mr-sm-2" id="fromCurrency" name="fromCurrency">
-                                <option th:each="c:${currencies}" th:value="${c.code}" th:text="${c.code}"></option>
+                                <option value="" disabled selected>Select currency</option>
+                                <option th:each="c:${currencies}" th:value="${c.code}" th:text="${c.code}" th:title="${c.name}"></option>
                             </select>
 
                             <label class="my-1 mr-2" for="toCurrency">To</label>
                             <select class="custom-select my-1 mr-sm-2" id="toCurrency" name="toCurrency">
-                                <option th:each="c:${currencies}" th:value="${c.code}" th:text="${c.code}"></option>
+                                <option value="" disabled selected>Select currency</option>
+                                <option th:each="c:${currencies}" th:value="${c.code}" th:text="${c.code}" th:title="${c.name}"></option>
                             </select>
                             <button type="submit" class="btn btn-primary my-1" id="btn-search">Submit</button>
                         </form>
+                        <div id="descriptionFromCurrency"></div>
+                        <div id="descriptionToCurrency"></div>
                     </div>
                     <div class="card-footer text-muted" id="search-form-footer"></div>
                 </div>
