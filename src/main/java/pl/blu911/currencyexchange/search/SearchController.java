@@ -26,34 +26,24 @@ public class SearchController {
                                              @RequestParam String toCurrency) {
 
         if (fromCurrency.equals("null") || toCurrency.equals("null")) {
-            return ResponseEntity.badRequest().body(
-                    LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))
-                            + ": Please choose 2 currencies from the lists");
+            return badRequest(": Please choose 2 currencies from the lists");
         } else if (fromCurrency.equals(toCurrency)) {
-            return ResponseEntity.badRequest().body(
-                    LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))
-                            + ": Please select 2 different currencies");
+            return badRequest(": Please select 2 different currencies");
         }
 
         SearchResponse result = new SearchResponse();
 
         ExchangeRate realTimeRate = exchangeRateService.getRealTimeRate(fromCurrency, toCurrency);
         if (realTimeRate == null) {
-            return ResponseEntity.badRequest().body(
-                    LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))
-                            + ": Five attempts per minute exceeded");
+            return badRequest(": Five attempts per minute exceeded");
         }
 
         List<ExchangeRate> historicalRates = exchangeRateService.getHistoricalRates(fromCurrency, toCurrency);
         if (historicalRates.get(0).getExchangeRate() == null) {
             if (historicalRates.get(0).getApiNote().contains("Invalid API call")) {
-                return ResponseEntity.badRequest().body(
-                        LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))
-                                + ": There are no historical data for these currencies");
+                return badRequest(": There are no historical data for these currencies");
             }
-            return ResponseEntity.badRequest().body(
-                    LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))
-                            + ": Five attempts per minute exceeded");
+            return badRequest(": Five attempts per minute exceeded");
         }
         List<List<ExchangeRate>> historicalRatesInPeriods = exchangeRateService.getHistoricalRatesInPeriods(historicalRates);
 
@@ -62,4 +52,11 @@ public class SearchController {
         result.setHistoricalRates(historicalRatesInPeriods);
         return ResponseEntity.ok(result);
     }
+
+    private ResponseEntity badRequest(String message) {
+        return ResponseEntity.badRequest().body(
+                LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))
+                        + message);
+    }
+
 }
