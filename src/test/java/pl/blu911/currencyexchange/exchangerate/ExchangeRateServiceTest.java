@@ -2,12 +2,13 @@ package pl.blu911.currencyexchange.exchangerate;
 
 import org.junit.Before;
 import org.junit.Test;
+import pl.blu911.currencyexchange.client.HttpClient;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class ExchangeRateServiceTest {
 
@@ -16,7 +17,7 @@ public class ExchangeRateServiceTest {
 
     @Before
     public void setUp() {
-        exchangeRateClient = mock(ExchangeRateClient.class);
+        exchangeRateClient = new ExchangeRateClient(new HttpClient());
         service = new ExchangeRateServiceImpl(exchangeRateClient);
     }
 
@@ -26,7 +27,6 @@ public class ExchangeRateServiceTest {
         ExchangeRate exchangeRate = new ExchangeRate();
         exchangeRate.setApiNote(null);
         exchangeRate.setDate(LocalDate.now());
-        when(exchangeRateClient.getRealTimeExchangeRate("EUR", "PLN")).thenReturn(exchangeRate);
 
         //when
         ExchangeRate realTimeRate = service.getRealTimeRate("EUR", "PLN");
@@ -34,6 +34,21 @@ public class ExchangeRateServiceTest {
         //then
         assertEquals(exchangeRate.getApiNote(), realTimeRate.getApiNote());
         assertEquals(exchangeRate.getDate(), realTimeRate.getDate());
+    }
+
+    @Test
+    public void shouldContainSpecifiedObject() {
+        //given
+        ExchangeRate exchangeRate = new ExchangeRate();
+        exchangeRate.setApiNote(null);
+        exchangeRate.setDate(LocalDate.of(2018, 9, 27));
+        exchangeRate.setExchangeRate(BigDecimal.valueOf(4.2684));
+
+        //when
+        List<ExchangeRate> exchangeRateList = service.getHistoricalRates("EUR", "PLN");
+
+        //then
+        assertTrue(exchangeRateList.contains(exchangeRate));
     }
 
 }
