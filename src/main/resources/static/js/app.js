@@ -30,17 +30,26 @@ function searchSubmit() {
 function displayRealtimePanel(dataset) {
     var fromCurrency = $("#fromCurrency").val();
     var toCurrency = $('#toCurrency').val();
+    var exchangeRate = dataset.realtimeRate.exchangeRate;
+    var fixedRate = exchangeRate.toFixed(4);
 
     var card = $("<div>").addClass("card");
     var cardHeader = $("<div>").addClass("card-header").text("Real-time exchange rate");
     var cardBody = $("<div>").addClass("card-body form-inline");
-    var h5 = $("<h5>").addClass("card-title my-1").attr("id", "exchange-rate").text(dataset.realtimeRate.exchangeRate).css("font-weight", "bold");
-    var label = $("<label>").addClass("my-1 mr-2").text("Amount").css("margin-left", "70px");
-    var input = $("<input>").addClass("form-control my-1").attr("min", "1").attr("type", "number").attr("value", "1").attr("id", "input-number").css("width", "100px", "margin-left", "10px");
+    var div1 = $("<div>").addClass("col-sm-4");
+    var div2 = $("<div>").addClass("col-sm-4");
+    var div3 = $("<div>").addClass("col-sm-4");
+    var h5 = $("<h5>").addClass("card-title my-1").attr("id", "exchange-rate").text(fixedRate).css("font-weight", "bold");
+    var label = $("<label>").addClass("my-1 mr-2").text(fromCurrency + " amount").attr("for", "input-number");
+    var input = $("<input>").addClass("form-control my-1").attr("min", "1").attr("type", "number").attr("value", "1").attr("id", "input-number").css("width", "100px");
+    var labelExchanged = $("<label>").addClass("my-1 mr-2").text(toCurrency + " amount " + fixedRate).attr("id", "exchanged-amount");
     var cardFooter = $("<div>").addClass("card-footer text-muted").text(fromCurrency + " --> " + toCurrency);
 
     //Constructing card element
-    cardBody.append(h5, label, input);
+    var divH5 = div1.append(h5);
+    var divInput = div2.append(label, input);
+    var divExchanged = div3.append(labelExchanged);
+    cardBody.append(divH5, divInput, divExchanged);
     card.append(cardHeader, cardBody, cardFooter);
 
     $('#realtime-panel').html(card);
@@ -64,12 +73,16 @@ function displayRealtimePanelError(error) {
 
 function changeAmount() {
     var exchangeRate = $("#exchange-rate").text();
+    var toCurrency = $('#toCurrency').val();
+    var input = $("#input-number");
+    var labelExchanged = $("#exchanged-amount");
 
-    $("#input-number").change('input', function () {
-        var number = $("#input-number").val();
-        var multiply = exchangeRate * number;
-        $("#exchange-rate").text(multiply);
+    input.change('input', function () {
+        var multiply = exchangeRate * input.val();
+        var fixedMultiply = multiply.toFixed(4);
+        labelExchanged.text(toCurrency + " amount " + fixedMultiply);
     });
+
 }
 
 function createGraph(dataset) {
