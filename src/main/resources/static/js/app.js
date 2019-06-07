@@ -36,20 +36,14 @@ function displayRealtimePanel(dataset) {
     var card = $("<div>").addClass("card");
     var cardHeader = $("<div>").addClass("card-header").text("Real-time exchange rate");
     var cardBody = $("<div>").addClass("card-body form-inline");
-    var div1 = $("<div>").addClass("col-sm-4");
-    var div2 = $("<div>").addClass("col-sm-4");
-    var div3 = $("<div>").addClass("col-sm-4");
     var h5 = $("<h5>").addClass("card-title my-1").attr("id", "exchange-rate").text(fixedRate).css("font-weight", "bold");
-    var label = $("<label>").addClass("my-1 mr-2").text(fromCurrency + " amount").attr("for", "input-number");
+    var label = $("<label>").addClass("my-1 mr-2").text(fromCurrency + " amount").attr("for", "input-number").css("margin-left", "20px");
     var input = $("<input>").addClass("form-control my-1").attr("min", "1").attr("type", "number").attr("value", "1").attr("id", "input-number").css("width", "100px");
-    var labelExchanged = $("<label>").addClass("my-1 mr-2").text(toCurrency + " amount " + fixedRate).attr("id", "exchanged-amount");
+    var labelExchanged = $("<label>").addClass("my-1 mr-2").text(toCurrency + " amount " + fixedRate).attr("id", "exchanged-amount").css("margin-left", "20px");
     var cardFooter = $("<div>").addClass("card-footer text-muted").text(fromCurrency + " --> " + toCurrency);
 
     //Constructing card element
-    var divH5 = div1.append(h5);
-    var divInput = div2.append(label, input);
-    var divExchanged = div3.append(labelExchanged);
-    cardBody.append(divH5, divInput, divExchanged);
+    cardBody.append(h5, label, input, labelExchanged);
     card.append(cardHeader, cardBody, cardFooter);
 
     $('#realtime-panel').html(card);
