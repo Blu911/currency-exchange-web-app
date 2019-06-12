@@ -8,6 +8,11 @@ import pl.blu911.currencyexchange.client.HttpClient;
 
 import java.util.*;
 
+/**
+ * The {@code CurrencyClient} class contains a CURRENCIES URI and
+ * a method that allow to get actual currencies codes and full names.
+ * @author Blu911
+ */
 @Component
 public class CurrencyClient {
     private final static Logger LOGGER = LoggerFactory.getLogger(CurrencyClient.class);
@@ -19,6 +24,13 @@ public class CurrencyClient {
         this.httpClient = httpClient;
     }
 
+    /**
+     * The method uses {@link HttpClient} to obtain data from
+     * openexchangerates.org as a String, parses it into a
+     * JSONObject and then using downloaded data
+     * creates a list of {@code Currency} objects.
+     * @return a list od {@code Currency} objects with currency code and name.
+     */
     List<Currency> getCurrencies() {
         List<Currency> currencyList = new ArrayList<>();
         String jsonString = httpClient.getStringFromUri(CURRENCIES_URI);
