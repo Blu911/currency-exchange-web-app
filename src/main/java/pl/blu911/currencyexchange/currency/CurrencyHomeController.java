@@ -7,9 +7,9 @@ import java.util.List;
 
 @Controller
 public class CurrencyHomeController {
-    private final CurrencyServiceImpl currenciesService;
+    private final CurrencyService currenciesService;
 
-    public CurrencyHomeController(CurrencyServiceImpl currenciesService) {
+    public CurrencyHomeController(CurrencyService currenciesService) {
         this.currenciesService = currenciesService;
     }
 

@@ -5,19 +5,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.blu911.currencyexchange.exchangerate.ExchangeRate;
+import pl.blu911.currencyexchange.exchangerate.ExchangeRateService;
 import pl.blu911.currencyexchange.exchangerate.ExchangeRateServiceImpl;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
 public class SearchController {
 
-    private final ExchangeRateServiceImpl exchangeRateService;
+    private final ExchangeRateService exchangeRateService;
 
-    public SearchController(ExchangeRateServiceImpl exchangeRateService) {
+    public SearchController(ExchangeRateService exchangeRateService) {
         this.exchangeRateService = exchangeRateService;
     }
 
@@ -54,7 +56,7 @@ public class SearchController {
     }
 
     private ResponseEntity badRequest(String message) {
-        return ResponseEntity.badRequest().body(
+        return ResponseEntity.ok(
                 LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))
                         + message);
     }
