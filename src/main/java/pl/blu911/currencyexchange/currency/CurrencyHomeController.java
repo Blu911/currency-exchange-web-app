@@ -5,6 +5,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * The {@code CurrencyHomeController} class provides "currencies"
+ * model attribute and controller action under "/" endpoint which
+ * generates "home" view to display.
+ */
 @Controller
 public class CurrencyHomeController {
     private final CurrencyService currenciesService;

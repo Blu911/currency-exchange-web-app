@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * The {@code CurrencyServiceImpl} implements {@link CurrencyService} interface.
+ */
 @Service
 public class CurrencyServiceImpl implements CurrencyService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CurrencyServiceImpl.class);
@@ -15,6 +18,12 @@ public class CurrencyServiceImpl implements CurrencyService {
         this.currencyClient = currencyClient;
     }
 
+    /**
+     * The {@code getAllCurrencies} method uses {@link CurrencyClient} to
+     * obtain all currencies from openexchangerates.org website.
+     *
+     * @return a list of {@link Currency} objects
+     */
     @Override
     public List<Currency> getAllCurrencies() {
         List<Currency> currencies = currencyClient.getCurrencies();
