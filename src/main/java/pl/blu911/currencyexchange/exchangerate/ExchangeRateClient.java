@@ -11,6 +11,13 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * The {@code ExchangeRateClient} class contains a ALPHA_ADVANTAGE_URI
+ * together with API_KEY, HISTORICAL_VALUES, REALTIME_VALUES parameters
+ * and methods that allow to get realtime and historical exchange rates.
+ *
+ * @author Blu911
+ */
 @Component
 public class ExchangeRateClient {
     private static final String ALPHA_ADVANTAGE_URI = "https://www.alphavantage.co/query?function=";
@@ -24,6 +31,16 @@ public class ExchangeRateClient {
         this.httpClient = httpClient;
     }
 
+    /**
+     * The method uses {@link HttpClient} to obtain data from alphavantage.co
+     * as a String, parses it into JSONObject and then checks for possible error
+     * messages and if ok, creates an {@link ExchangeRate} object with current
+     * exchange rate for specified currencies pair.
+     *
+     * @param fromCurrency a currency code in ISO 4217 format e.g: USD, EUR, PLN, GBP
+     * @param toCurrency a currency code in ISO 4217 format e.g: USD, EUR, PLN, GBP
+     * @return an {@code ExchangeRate} object.
+     */
     ExchangeRate getRealTimeExchangeRate(String fromCurrency, String toCurrency) {
 
         String jsonString = httpClient.getStringFromUri(
@@ -58,6 +75,18 @@ public class ExchangeRateClient {
                 jsonObject.getString("Error Message"));
     }
 
+    /**
+     * The method uses {@link HttpClient} to obtain data from alphavantage.co
+     * as a String, parses it into JSONObject and then checks for possible error
+     * messages and if ok, creates an {@link ExchangeRate} object with current
+     * exchange rate for specified currencies pair.
+     *
+     * @param fromCurrency a currency code in ISO 4217 format e.g: USD, EUR, PLN, GBP
+     * @param toCurrency a currency code in ISO 4217 format e.g: USD, EUR, PLN, GBP
+     * @param outputSize parameter can be a String value of "full" for rich history
+     *                   and "compact" for currencies pair that don't have full history
+     * @return a list of {@link ExchangeRate} objects
+     */
     List<ExchangeRate> getHistoricalExchangeRates(String fromCurrency,
                                                                 String toCurrency,
                                                                 String outputSize) {

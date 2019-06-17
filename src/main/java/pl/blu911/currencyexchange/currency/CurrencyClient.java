@@ -26,9 +26,9 @@ public class CurrencyClient {
 
     /**
      * The method uses {@link HttpClient} to obtain data from
-     * openexchangerates.org as a String, parses it into a
-     * JSONObject and then using downloaded data
-     * creates a list of {@code Currency} objects.
+     * openexchangerates.org as a String, parses it into a JSONObject
+     * and then using downloaded data creates a list of {@code Currency} objects.
+     *
      * @return a list od {@code Currency} objects with currency code and name.
      */
     List<Currency> getCurrencies() {
