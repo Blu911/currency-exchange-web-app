@@ -5,7 +5,8 @@ Project in development.
 The goal is to parse JSON files with currency exchange rates from the Alpha Vantage API and display them in web application.
 
 ### Run:
-To run the app visit: *https://blu911-currency-exchange.herokuapp.com/*
+Online adress*: : *https://blu911-currency-exchange.herokuapp.com/*
+*Please be patient, server usually sleeps, so sometimes is needed to wait a few seconds (max 60s) to load the page.
 
 ### Few sreenshots from the app
 
