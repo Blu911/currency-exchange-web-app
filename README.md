@@ -4,7 +4,7 @@ The goal is to parse JSON files with currency exchange rates from the Alpha Vant
 ### Run:
 Online adress*: *https://blu911-currency-exchange.herokuapp.com/*
 
-**Please be patient, server usually sleeps, so sometimes is needed to wait a few seconds (max 60s) to load the page.*
+**Please be patient, server usually sleeps, so sometimes is needed to wait a few seconds (max 60s) to load the page. Loading exchange rates for chosen currencies usually also takes up to 10 seconds.*
 
 ### Technologies:
 * Spring Boot
